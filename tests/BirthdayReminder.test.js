@@ -137,3 +137,19 @@ test('Класс BirthdayReminder должен искать друзей по и
     expect(foundFriends).not.toContain(friend2);
     expect(foundFriends.length).toBe(2);
 });
+
+test('Класс BirthdayReminder должен уведомлять о сегодняшних ДР', () => {
+    mockDate(2026, 5, 15);
+    
+    const reminder = new BirthdayReminder();
+    const friend = new Friend('Иван Иванов', '1990-05-15');
+    
+    reminder.addFriend(friend);
+    reminder.checkAndNotifyBirthdays();
+
+    expect(consoleOutput[0]).toContain('   СЕГОДНЯ ДЕНЬ РОЖДЕНИЯ У');
+    expect(consoleOutput[0]).toMatch(/ИВАН ИВАНОВ/);
+    expect(consoleOutput[1]).toMatch(/Исполняется 36 лет/);
+    expect(consoleOutput[2]).toMatch(/Дата рождения: 1990-05-15/);
+    expect(consoleOutput[3]).toMatch(/Поздравьте своего друга/);
+});
