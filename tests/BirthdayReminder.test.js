@@ -75,3 +75,32 @@ test('Класс BirthdayReminder должен искать сегодняшни
     expect(todayBirthdays).not.toContain(friend2);
     expect(todayBirthdays.length).toBe(2);
 });
+
+test('Класс BirthdayReminder должен искать именниников на неделе', () => {
+    mockDate(2026, 5, 15);
+    
+    const reminder = new BirthdayReminder();
+    const friend1 = new Friend('Иван Иванов', '1990-05-15');  // сегодня
+    const friend2 = new Friend('Марина Петрова', '1985-05-16'); // завтра
+    const friend3 = new Friend('Альберт Блэк', '1995-05-20'); // через 5 дней
+    const friend4 = new Friend('Анна Смирнова', '1988-05-22'); // через 7 дней
+    const friend5 = new Friend('Олег Новиков', '1992-05-23'); // через 8 дней
+    const friend6 = new Friend('Елена Козлова', '1987-06-01'); // через 17 дней
+    
+    reminder.addFriend(friend1);
+    reminder.addFriend(friend2);
+    reminder.addFriend(friend3);
+    reminder.addFriend(friend4);
+    reminder.addFriend(friend5);
+    reminder.addFriend(friend6);
+    
+    const upcomingBirthdays = reminder.getUpcomingBirthdays();
+    
+    expect(upcomingBirthdays).toContain(friend1);
+    expect(upcomingBirthdays).toContain(friend2);
+    expect(upcomingBirthdays).toContain(friend3);
+    expect(upcomingBirthdays).toContain(friend4);
+    expect(upcomingBirthdays).not.toContain(friend5);
+    expect(upcomingBirthdays).not.toContain(friend6);
+    expect(upcomingBirthdays.length).toBe(4);
+});
