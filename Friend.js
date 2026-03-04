@@ -15,8 +15,17 @@ class Friend {
 
     getAge() {
         const today = new Date();
-        const [year] = this.birthDate.split('-').map(Number);
-        return today.getFullYear() - year;
+        const [year, month, day] = this.birthDate.split('-').map(Number);
+        
+        let age = today.getFullYear() - year;
+        
+        // Проверка, был ли уже день рождения в этом году
+        const birthDayThisYear = new Date(today.getFullYear(), month - 1, day);
+        if (today < birthDayThisYear) {
+            age--;
+        }
+        
+        return age;
     }
 }
 
