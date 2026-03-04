@@ -1,6 +1,8 @@
 class Friend {
-    constructor() {
-
+    
+    constructor(name, birthDate) {
+        this.name = name;
+        this.birthDate = birthDate;
     }
 }
 
