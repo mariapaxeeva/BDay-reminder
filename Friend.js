@@ -6,8 +6,7 @@ class Friend {
     }
 
     getName() {
-        // todo: реализовать позже
-        return 'Иван Иванов';
+        return this.name;
     }
 
     getBirthDate() {
