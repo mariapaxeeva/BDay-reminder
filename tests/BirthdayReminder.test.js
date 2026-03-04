@@ -1,6 +1,22 @@
 const BirthdayReminder = require('../BirthdayReminder');
 const Friend = require('../Friend');
 
+const mockDate = (year, month, day) => {
+    const realDate = Date;
+    global.Date = class extends realDate {
+        constructor(...args) {
+            if (args.length === 0) {
+                return new realDate(year, month - 1, day);
+            }
+            return new realDate(...args);
+        }
+    };
+};
+
+afterEach(() => {
+    global.Date = Date;
+});
+
 test('BirthdayReminder класс должен быть создан', () => {
     const reminder = new BirthdayReminder();
     expect(reminder).toBeDefined();
@@ -38,4 +54,24 @@ test('Класс BirthdayReminder должен позволять удалять
     reminder.removeFriend(friend);
     
     expect(reminder.getAllFriends()).not.toContain(friend);
+});
+
+test('Класс BirthdayReminder должен искать сегодняшних именниников', () => {
+    mockDate(2026, 5, 15);
+    
+    const reminder = new BirthdayReminder();
+    const friend1 = new Friend('Иван Иванов', '1990-05-15');
+    const friend2 = new Friend('Марина Петрова', '1985-10-20');
+    const friend3 = new Friend('Альберт Блэк', '1995-05-15');
+    
+    reminder.addFriend(friend1);
+    reminder.addFriend(friend2);
+    reminder.addFriend(friend3);
+    
+    const todayBirthdays = reminder.getTodaysBirthdays();
+    
+    expect(todayBirthdays).toContain(friend1);
+    expect(todayBirthdays).toContain(friend3);
+    expect(todayBirthdays).not.toContain(friend2);
+    expect(todayBirthdays.length).toBe(2);
 });
