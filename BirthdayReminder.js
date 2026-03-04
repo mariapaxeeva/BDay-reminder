@@ -54,9 +54,17 @@ class BirthdayReminder {
     }
 
     findFriendsByName(searchName, exactMatch = false) {
-        return this.friends.filter(friend => 
-            friend.getName().toLowerCase() === searchName.toLowerCase()
-        );
+        if (this.friends.length === 0) return [];
+        
+        if (exactMatch) {
+            return this.friends.filter(friend => 
+                friend.getName().toLowerCase() === searchName.toLowerCase()
+            );
+        } else {
+            return this.friends.filter(friend => 
+                friend.getName().toLowerCase().includes(searchName.toLowerCase())
+            );
+        }
     }
 }
 
