@@ -10,8 +10,7 @@ class Friend {
     }
 
     getBirthDate() {
-        // todo: реализовать позже
-        return '1990-05-15';
+        return this.birthDate;
     }
 }
 
