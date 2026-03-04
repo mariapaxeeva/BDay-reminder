@@ -13,7 +13,19 @@ const mockDate = (year, month, day) => {
     };
 };
 
+let consoleOutput = [];
+const originalLog = console.log;
+const mockLog = (output) => {
+    consoleOutput.push(output);
+};
+
+beforeEach(() => {
+    consoleOutput = [];
+    console.log = mockLog;
+});
+
 afterEach(() => {
+    console.log = originalLog;
     global.Date = Date;
 });
 
@@ -76,7 +88,7 @@ test('Класс BirthdayReminder должен искать сегодняшни
     expect(todayBirthdays.length).toBe(2);
 });
 
-test('Класс BirthdayReminder должен искать именниников на неделе', () => {
+test('Класс BirthdayReminder должен искать именниников в течение заданного числа дней', () => {
     mockDate(2026, 5, 15);
     
     const reminder = new BirthdayReminder();
@@ -94,7 +106,7 @@ test('Класс BirthdayReminder должен искать именнинико
     reminder.addFriend(friend5);
     reminder.addFriend(friend6);
     
-    const upcomingBirthdays = reminder.getUpcomingBirthdays();
+    const upcomingBirthdays = reminder.getUpcomingBirthdays(7);
     
     expect(upcomingBirthdays).toContain(friend1);
     expect(upcomingBirthdays).toContain(friend2);
