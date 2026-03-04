@@ -52,6 +52,12 @@ class BirthdayReminder {
         
         return upcomingBirthdays;
     }
+
+    findFriendsByName(searchName, exactMatch = false) {
+        return this.friends.filter(friend => 
+            friend.getName().toLowerCase() === searchName.toLowerCase()
+        );
+    }
 }
 
 module.exports = BirthdayReminder;
