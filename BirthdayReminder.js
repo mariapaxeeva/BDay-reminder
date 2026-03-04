@@ -31,26 +31,32 @@ class BirthdayReminder {
         });
     }
 
-    getUpcomingBirthdays() {
-        // todo: реализовать позже
+    getUpcomingBirthdays(daysAhead) {
         if (this.friends.length === 0) return [];
         
-        const today = new Date(2026, 4, 15);
-        const upcomingBirthdays = [];
+        const today = new Date();
+        const todayMonth = today.getMonth() + 1;
+        const todayDay = today.getDate();
         
-        for (const friend of this.friends) {
+        // Функция для преобразования даты в день года
+        const dayOfYear = (month, day) => {
+            const date = new Date(2000, month - 1, day);
+            return Math.floor((date - new Date(2000, 0, 1)) / (24 * 60 * 60 * 1000));
+        };
+        
+        const todayDayOfYear = dayOfYear(todayMonth, todayDay);
+        
+        return this.friends.filter(friend => {
             const [year, month, day] = friend.getBirthDate().split('-').map(Number);
-            const birthDateThisYear = new Date(2026, month - 1, day);
+            const birthdayDayOfYear = dayOfYear(month, day);
             
-            const diffTime = birthDateThisYear - today;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            if (diffDays >= 0 && diffDays <= 7) {
-                upcomingBirthdays.push(friend);
+            let diff = birthdayDayOfYear - todayDayOfYear;
+            if (diff < 0) {
+                diff += 365;
             }
-        }
-        
-        return upcomingBirthdays;
+            
+            return diff <= daysAhead;
+        });
     }
 
     findFriendsByName(searchName, exactMatch = false) {
