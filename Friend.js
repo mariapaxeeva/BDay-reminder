@@ -9,6 +9,11 @@ class Friend {
         // todo: реализовать позже
         return 'Иван Иванов';
     }
+
+    getBirthDate() {
+        // todo: реализовать позже
+        return '1990-05-15';
+    }
 }
 
 module.exports = Friend;
