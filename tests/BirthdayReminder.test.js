@@ -29,3 +29,13 @@ test('Класс BirthdayReminder должен позволять получат
     expect(friends).toContain(friend1);
     expect(friends).toContain(friend2);
 });
+
+test('Класс BirthdayReminder должен позволять удалять друзей', () => {
+    const reminder = new BirthdayReminder();
+    const friend = new Friend('Иван Иванов', '1990-05-15');
+    
+    reminder.addFriend(friend);
+    reminder.removeFriend(friend);
+    
+    expect(reminder.getAllFriends()).not.toContain(friend);
+});
