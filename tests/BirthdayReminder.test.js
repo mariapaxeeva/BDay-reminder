@@ -119,3 +119,21 @@ test('Класс BirthdayReminder должен искать друзей по и
     expect(foundFriends).not.toContain(friend2);
     expect(foundFriends.length).toBe(1);
 });
+
+test('Класс BirthdayReminder должен искать друзей по имени (частично)', () => {
+    const reminder = new BirthdayReminder();
+    const friend1 = new Friend('Иван Иванов', '1990-05-15');
+    const friend2 = new Friend('Марина Петрова', '1985-10-20');
+    const friend3 = new Friend('Иван Блэк', '1995-03-10');
+    
+    reminder.addFriend(friend1);
+    reminder.addFriend(friend2);
+    reminder.addFriend(friend3);
+    
+    const foundFriends = reminder.findFriendsByName('Иван');
+    
+    expect(foundFriends).toContain(friend1);
+    expect(foundFriends).toContain(friend3);
+    expect(foundFriends).not.toContain(friend2);
+    expect(foundFriends.length).toBe(2);
+});
