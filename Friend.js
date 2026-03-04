@@ -12,6 +12,12 @@ class Friend {
     getBirthDate() {
         return this.birthDate;
     }
+
+    getAge() {
+        const today = new Date();
+        const [year] = this.birthDate.split('-').map(Number);
+        return today.getFullYear() - year;
+    }
 }
 
 module.exports = Friend;
