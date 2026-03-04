@@ -6,6 +6,10 @@ class BirthdayReminder {
     addFriend(friend) {
         this.friends.push(friend);
     }
+
+    getAllFriends() {
+        return this.friends;
+    }
 }
 
 module.exports = BirthdayReminder;
