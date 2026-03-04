@@ -66,6 +66,24 @@ class BirthdayReminder {
             );
         }
     }
+
+    checkAndNotifyBirthdays(callback = null) {
+        // todo: реализовать позже
+        const todayBirthdays = this.getTodaysBirthdays();
+        
+        if (todayBirthdays.length === 0) {
+            return [];
+        }
+        
+        todayBirthdays.forEach(friend => {
+            console.log(`   СЕГОДНЯ ДЕНЬ РОЖДЕНИЯ У ${friend.getName().toUpperCase()}!`);
+            console.log(`   Исполняется ${friend.getAge()} лет`);
+            console.log(`   Дата рождения: ${friend.getBirthDate()}`);
+            console.log('   Поздравьте своего друга!\n');
+        });
+        
+        return todayBirthdays;
+    }
 }
 
 module.exports = BirthdayReminder;
