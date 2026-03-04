@@ -17,6 +17,19 @@ class BirthdayReminder {
             this.friends.splice(index, 1);
         }
     }
+
+    getTodaysBirthdays() {
+        if (this.friends.length === 0) return [];
+        
+        const today = new Date();
+        const todayMonth = today.getMonth() + 1;
+        const todayDay = today.getDate();
+        
+        return this.friends.filter(friend => {
+            const [year, month, day] = friend.getBirthDate().split('-').map(Number);
+            return month === todayMonth && day === todayDay;
+        });
+    }
 }
 
 module.exports = BirthdayReminder;
