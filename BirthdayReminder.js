@@ -30,6 +30,28 @@ class BirthdayReminder {
             return month === todayMonth && day === todayDay;
         });
     }
+
+    getUpcomingBirthdays() {
+        // todo: реализовать позже
+        if (this.friends.length === 0) return [];
+        
+        const today = new Date(2026, 4, 15);
+        const upcomingBirthdays = [];
+        
+        for (const friend of this.friends) {
+            const [year, month, day] = friend.getBirthDate().split('-').map(Number);
+            const birthDateThisYear = new Date(2026, month - 1, day);
+            
+            const diffTime = birthDateThisYear - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays >= 0 && diffDays <= 7) {
+                upcomingBirthdays.push(friend);
+            }
+        }
+        
+        return upcomingBirthdays;
+    }
 }
 
 module.exports = BirthdayReminder;
